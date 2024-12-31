@@ -7,6 +7,7 @@ public class Day06 : ISolver
 {
     private const char Obstacle = '#';
     private const char Start = '^';
+    private static HashSet<(int, int)> _pathTaken = [];
     public Solution Solve()
     {
         var input = FileReader.ReadFileContent("Day06.txt");
@@ -26,16 +27,14 @@ public class Day06 : ISolver
         var rows = grid.Length; 
         var cols = grid[0].Length;
         
-        var positions = new HashSet<(int, int)>();
-        
         for (var i = 0; i < rows; i++){
             for (var j = 0; j < cols; j++)
             {
                 if (grid[i][j] != Start) continue;
-                Move(grid, i, j, Start, positions);
+                Move(grid, i, j, Start, _pathTaken);
             }
         }
-        return positions.Count;
+        return _pathTaken.Count;
     }
 
     private static void Move(char[][] grid, int row, int col, char dir, HashSet<(int, int)> positions)
@@ -103,6 +102,8 @@ public class Day06 : ISolver
     
     public static int DetermineDistinctObstructions(string input)
     {
+        DetermineDistinctPositions(input);
+        
         var grid = input.Split("\n").Select(row => row.ToCharArray()).ToArray();
         
         var rows = grid.Length; 
@@ -115,6 +116,7 @@ public class Day06 : ISolver
             for (var j = 0; j < cols; j++)
             {
                 if (grid[i][j] == Start || grid[i][j] == Obstacle) continue;
+                if (!_pathTaken.Contains((i, j))) continue;
                 var positions = new HashSet<(int, int, char)>();
                 grid[i][j] = Obstacle;
                 if (HasLoop(grid, guardCoordinate[0], guardCoordinate[1], Start, positions))
