@@ -23,4 +23,12 @@ public class Day06Tests
         var res = Day06.DetermineDistinctPositions(Input);
         res.Should().Be(expected);
     }
+    
+    [TestMethod]
+    public void It_counts_distinct_obstructions()
+    {
+        const int expected = 6;
+        var res = Day06.DetermineDistinctObstructions(Input);
+        res.Should().Be(expected);
+    }
 }
