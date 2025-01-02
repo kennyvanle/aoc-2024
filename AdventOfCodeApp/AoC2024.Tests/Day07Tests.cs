@@ -22,4 +22,12 @@ public class Day07Tests
         var res = Day07.DetermineCalibration(Input);
         res.Should().Be(expected);
     }
+    
+    [TestMethod]
+    public void It_determines_calibration_with_concatenation()
+    {
+        const int expected = 11387;
+        var res = Day07.DetermineCalibrationWithConcatenation(Input);
+        res.Should().Be(expected);
+    }
 }

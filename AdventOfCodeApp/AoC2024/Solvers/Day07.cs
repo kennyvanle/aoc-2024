@@ -11,6 +11,7 @@ public class Day07 : ISolver
         var solution = new Solution
         {
             Part1 = DetermineCalibration(input),
+            Part2 = DetermineCalibrationWithConcatenation(input)
         };
 
         return solution;
@@ -38,25 +39,72 @@ public class Day07 : ISolver
     
     private static bool IsValid(long goal, long[] operands)
     {
-        var memo = new Dictionary<(long acc, long index), bool>();
+        var memo = new Dictionary<(long accumulatedVal, long index), bool>();
 
         return DynamicProgrammingCalibration(operands[0], 1);
         
-        bool DynamicProgrammingCalibration(long acc, long index)
+        bool DynamicProgrammingCalibration(long accumulatedVal, long index)
         {
-            if (memo.ContainsKey((acc, index)))
-                return memo[(acc, index)];
+            if (memo.ContainsKey((accumulatedVal, index)))
+                return memo[(accumulatedVal, index)];
 
-            if (acc == goal && index == operands.Length)
+            if (accumulatedVal == goal && index == operands.Length)
                 return true;
 
-            if (acc > goal || index == operands.Length)
+            if (accumulatedVal > goal || index == operands.Length)
                 return false;
 
-            var result = DynamicProgrammingCalibration(acc + operands[index], index + 1) ||
-                         DynamicProgrammingCalibration(acc * operands[index], index + 1);
+            var result = DynamicProgrammingCalibration(accumulatedVal + operands[index], index + 1) ||
+                         DynamicProgrammingCalibration(accumulatedVal * operands[index], index + 1);
 
-            memo[(acc, index)] = result;
+            memo[(accumulatedVal, index)] = result;
+
+            return result;
+        }
+    }
+
+    public static object DetermineCalibrationWithConcatenation(string input)
+    {
+        var lines = input.Split("\n");
+
+        var result = 0l;
+        foreach (var line in lines)
+        {
+            var parts = line.Split(": ");
+            var goal = long.Parse(parts[0]);
+            var nums = parts[1].Split(" ").Select(long.Parse).ToArray();;
+
+            if (IsValidWithConcatenation(goal, nums))
+            {
+                result += goal;
+            }
+        }
+
+        return result;
+    }
+
+    private static bool IsValidWithConcatenation(long goal, long[] operands)
+    {
+        var memo = new Dictionary<(long accumulatedVal, long index), bool>();
+
+        return DynamicProgrammingCalibration(operands[0], 1);
+        
+        bool DynamicProgrammingCalibration(long accumulatedVal, long index)
+        {
+            if (memo.ContainsKey((accumulatedVal, index)))
+                return memo[(accumulatedVal, index)];
+
+            if (accumulatedVal == goal && index == operands.Length)
+                return true;
+
+            if (accumulatedVal > goal || index == operands.Length)
+                return false;
+
+            var result = DynamicProgrammingCalibration(accumulatedVal + operands[index], index + 1) ||
+                         DynamicProgrammingCalibration(accumulatedVal * operands[index], index + 1) ||
+                         DynamicProgrammingCalibration(long.Parse(accumulatedVal + operands[index].ToString()), index + 1);
+
+            memo[(accumulatedVal, index)] = result;
 
             return result;
         }
