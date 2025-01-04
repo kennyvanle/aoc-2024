@@ -19,15 +19,15 @@ public class Day05: ISolver
     public static int SumValidInstructions(string input)
     {
         var validInstructions = new List<string>();
-        var parts = input.Split(["\n\n"], StringSplitOptions.None);
+        var parts = input.Split(["\r\n\r\n", "\n\n"], StringSplitOptions.None);
         var rulesInput = parts[0];
         var instructionsInput = parts[1];
         
-        var rules = rulesInput.Split(["\n"], StringSplitOptions.None)
+        var rules = rulesInput.Split(["\r\n", "\n"], StringSplitOptions.None)
             .Select(line => Tuple.Create(int.Parse(line.Split('|')[0]), int.Parse(line.Split('|')[1])))
             .ToList();
 
-        var instructions = instructionsInput.Split(["\n"], StringSplitOptions.None);
+        var instructions = instructionsInput.Split(["\r\n", "\n"], StringSplitOptions.None);
         foreach (var line in instructions)
         {
             var instruction = line.Split(',').Select(int.Parse).ToList();
@@ -55,15 +55,15 @@ public class Day05: ISolver
     public static int SumFixedInstructions(string input)
     {
         var invalidInstructions = new List<string>();
-        var parts = input.Split(["\n\n"], StringSplitOptions.None);
+        var parts = input.Split(["\r\n\r\n", "\n\n"], StringSplitOptions.None);
         var rulesInput = parts[0];
         var instructionsInput = parts[1];
         
-        var rules = rulesInput.Split(["\n"], StringSplitOptions.None)
+        var rules = rulesInput.Split(["\r\n", "\n"], StringSplitOptions.None)
             .Select(line => Tuple.Create(int.Parse(line.Split('|')[0]), int.Parse(line.Split('|')[1])))
             .ToList();
 
-        var instructions = instructionsInput.Split(["\n"], StringSplitOptions.None);
+        var instructions = instructionsInput.Split(["\r\n", "\n"], StringSplitOptions.None);
         foreach (var line in instructions)
         {
             var instruction = line.Split(',').Select(int.Parse).ToList();

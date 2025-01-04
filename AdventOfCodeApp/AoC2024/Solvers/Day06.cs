@@ -22,7 +22,7 @@ public class Day06 : ISolver
 
     public static int DetermineDistinctPositions(string input)
     {
-        var grid = input.Split("\n").Select(row => row.ToCharArray()).ToArray();
+        var grid = input.Split(["\r\n", "\n"], StringSplitOptions.None).Select(row => row.ToCharArray()).ToArray();
         
         var rows = grid.Length; 
         var cols = grid[0].Length;
@@ -103,9 +103,9 @@ public class Day06 : ISolver
     public static int DetermineDistinctObstructions(string input)
     {
         DetermineDistinctPositions(input);
-        
-        var grid = input.Split("\n").Select(row => row.ToCharArray()).ToArray();
-        
+
+        var grid = input.Split(["\r\n", "\n"], StringSplitOptions.None).Select(row => row.ToCharArray()).ToArray();
+
         var rows = grid.Length; 
         var cols = grid[0].Length;
 

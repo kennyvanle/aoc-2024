@@ -19,14 +19,17 @@ public partial class Day04 : ISolver
 
     public static int FindAllXmas(string input)
     {
-        var grid = input.Split("\n").Select(row => row.ToCharArray()).ToArray();
-        
-        var rows = grid.Length; 
+        var grid = input.Split(["\r\n", "\n"], StringSplitOptions.None)
+                .Select(row => row.ToCharArray())
+                .ToArray();
+
+        var rows = grid.Length;
         var cols = grid[0].Length;
-        
+
         var total = 0;
-        
-        for (var i = 0; i < rows; i++){
+
+        for (var i = 0; i < rows; i++)
+        {
             for (var j = 0; j < cols; j++)
             {
                 if (grid[i][j] != 'X') continue;
@@ -34,10 +37,10 @@ public partial class Day04 : ISolver
                 total += res;
             }
         }
-        
+
         return total;
     }
-    
+
     private static int FindXmas(char[][] grid, int x, int y)
     {
         const string target = "XMAS";
@@ -70,17 +73,20 @@ public partial class Day04 : ISolver
         }
         return false;
     }
-    
+
     public static int FindAllXmasPart2(string input)
     {
-        var grid = input.Split("\n").Select(row => row.ToCharArray()).ToArray();
-        
-        var rows = grid.Length; 
+        var grid = input.Split(["\r\n", "\n"], StringSplitOptions.None)
+                .Select(row => row.ToCharArray())
+                .ToArray();
+
+        var rows = grid.Length;
         var cols = grid[0].Length;
-        
+
         var total = 0;
-        
-        for (var i = 0; i < rows; i++){
+
+        for (var i = 0; i < rows; i++)
+        {
             for (var j = 0; j < cols; j++)
             {
                 if (grid[i][j] != 'A') continue;
@@ -88,10 +94,10 @@ public partial class Day04 : ISolver
                 total += res;
             }
         }
-        
+
         return total;
     }
-    
+
     private static int FindXmasPart2(char[][] grid, int x, int y)
     {
         var targets = new[] { "MS", "SM" };

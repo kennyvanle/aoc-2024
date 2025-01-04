@@ -19,7 +19,7 @@ public class Day01 : ISolver
     
     public static int CalculateTotalDistance(string input)
     {
-        var lines = input.Split("\n");
+        var lines = input.Split(["\r\n", "\n"], StringSplitOptions.None);
         List<int> left = [];
         List<int> right = [];
         foreach (var line in lines)
@@ -42,7 +42,7 @@ public class Day01 : ISolver
 
     public static int CalculateSimilarityScore(string input)
     {
-        var lines = input.Split("\n");
+        var lines = input.Split(["\r\n", "\n"], StringSplitOptions.None);
         List<int> left = [];
         List<int> right = [];
         foreach (var line in lines)

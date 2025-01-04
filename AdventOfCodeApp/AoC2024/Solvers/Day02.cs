@@ -19,7 +19,7 @@ public class Day02 : ISolver
 
     public static int CalculateSafeReports(string input, bool withTolerance = false)
     {
-        var rows = input.Split("\n");
+        var rows = input.Split(["\r\n", "\n"], StringSplitOptions.None);
         var safeCount = 0;
 
         foreach (var row in rows)

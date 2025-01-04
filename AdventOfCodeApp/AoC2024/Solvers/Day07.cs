@@ -19,7 +19,7 @@ public class Day07 : ISolver
 
     public static long DetermineCalibration(string input)
     {
-        var lines = input.Split("\n");
+        var lines = input.Split(["\r\n", "\n"], StringSplitOptions.None);
 
         var result = 0l;
         foreach (var line in lines)
@@ -65,7 +65,7 @@ public class Day07 : ISolver
 
     public static object DetermineCalibrationWithConcatenation(string input)
     {
-        var lines = input.Split("\n");
+        var lines = input.Split(["\r\n", "\n"], StringSplitOptions.None);
 
         var result = 0l;
         foreach (var line in lines)
