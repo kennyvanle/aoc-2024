@@ -11,6 +11,7 @@ namespace AoC2024.Solvers
             var solution = new Solution
             {
                 Part1 = LocateUniqueAntinodes(input),
+                Part2 = LocateUniqueAntinodesWithResonantHarmonics(input)
             };
 
             return solution;
@@ -72,6 +73,51 @@ namespace AoC2024.Solvers
                 .Where(t => t.frequency != '.')
                 .ToList();
             return antennas;
+        }
+
+        public static int LocateUniqueAntinodesWithResonantHarmonics(string input)
+        {
+            var rows = input.Split(["\r\n", "\n"], StringSplitOptions.None);
+
+            var gridRowSize = rows.Length;
+            var gridColSize = rows[0].Length;
+
+            var antennas = GetAntennas(rows);
+            var groupedAntennas = GroupAntennas(antennas);
+
+            var uniqueAntiNodes = new HashSet<(int row, int col)>();
+
+            foreach (var currentAntenna in antennas)
+            {
+                if (groupedAntennas.TryGetValue(currentAntenna.frequency, out var positions))
+                {
+                    foreach (var targetAntenna in positions)
+                    {
+                        if (targetAntenna.row == currentAntenna.row && targetAntenna.col == currentAntenna.col)
+                        {
+                            continue;
+                        }
+
+                        var delta = (row: currentAntenna.row - targetAntenna.row, col: currentAntenna.col - targetAntenna.col);
+
+                        var potentialAntiNode = (row: currentAntenna.row + delta.row, col: currentAntenna.col + delta.col);
+
+                        while (InGrid(potentialAntiNode, gridRowSize, gridColSize))
+                        {
+                            uniqueAntiNodes.Add(potentialAntiNode);
+                            potentialAntiNode = (row: potentialAntiNode.row + delta.row, col: potentialAntiNode.col + delta.col);
+                        }
+                        
+                        potentialAntiNode = (row: currentAntenna.row - delta.row, col: currentAntenna.col - delta.col);
+                        while (InGrid(potentialAntiNode, gridRowSize, gridColSize))
+                        {
+                            uniqueAntiNodes.Add(potentialAntiNode);
+                            potentialAntiNode = (row: potentialAntiNode.row - delta.row, col: potentialAntiNode.col - delta.col);
+                        }
+                    }
+                }
+            }
+            return uniqueAntiNodes.Count;
         }
     }
 }
